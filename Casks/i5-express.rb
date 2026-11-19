@@ -1,6 +1,6 @@
 cask "i5-express" do
-  version "1.1.0"
-  sha256 "3a8a177d52dc6a8dd734a851299eb097fcbee0d196bed833cd41e0a5f08677da"
+  version "1.2.0"
+  sha256 "f0eab0f597378a944407aeb8d19a154a6f22e7bea0f7074df95bf7f73f1f4649"
 
   url "https://github.com/andrewmacheret/i5-macos-menubar/releases/download/v#{version}/I-5-Express-v#{version}.dmg"
   name "I-5 Express"
