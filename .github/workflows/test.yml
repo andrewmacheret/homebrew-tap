@@ -10,6 +10,9 @@ on:
 jobs:
   i5-express:
     runs-on: macos-latest
+    env:
+      # Shared runners hit GitHub's limit for anonymous API calls
+      HOMEBREW_GITHUB_API_TOKEN: ${{ github.token }}
     steps:
       - uses: actions/checkout@v7
 
