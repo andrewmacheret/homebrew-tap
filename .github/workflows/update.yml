@@ -1,0 +1,39 @@
+# Points each cask at its app's latest release. Installed copies update themselves,
+# so this only matters for new installs.
+name: Update casks
+
+on:
+  schedule:
+    - cron: "17 */6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  i5-express:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Update to the latest release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: andrewmacheret/i5-macos-menubar
+          CASK: Casks/i5-express.rb
+        run: |
+          tag=$(gh release view -R "$REPO" --json tagName --jq .tagName)
+          version=${tag#v}
+          current=$(sed -nE 's/^  version "(.*)"$/\1/p' "$CASK")
+          if [ "$version" = "$current" ]; then
+            echo "Already on $version"
+            exit 0
+          fi
+          gh release download "$tag" -R "$REPO" -p "I-5-Express-$tag.dmg" -O app.dmg
+          sha=$(sha256sum app.dmg | cut -d' ' -f1)
+          rm app.dmg
+          sed -i -E "s/^  version \".*\"$/  version \"$version\"/; s/^  sha256 \".*\"$/  sha256 \"$sha\"/" "$CASK"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -am "i5-express $version"
+          git push

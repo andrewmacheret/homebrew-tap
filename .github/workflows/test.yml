@@ -1,0 +1,38 @@
+# Installs each cask on a clean Mac, checks it, then uninstalls it.
+name: Test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  i5-express:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Tap this checkout
+        run: |
+          brew tap andrewmacheret/tap "$GITHUB_WORKSPACE"
+          brew trust --cask andrewmacheret/tap/i5-express
+
+      - name: Audit
+        run: brew audit --cask --online andrewmacheret/tap/i5-express
+
+      - name: Install
+        run: |
+          brew install --cask andrewmacheret/tap/i5-express
+          app="/Applications/I-5 Express.app"
+          codesign --verify --deep --strict "$app"
+          if xattr "$app" | grep -q com.apple.quarantine; then
+            echo "::error::The app still has the quarantine flag, so Gatekeeper would block it."
+            exit 1
+          fi
+          plutil -extract CFBundleShortVersionString raw "$app/Contents/Info.plist"
+
+      - name: Uninstall
+        run: |
+          brew uninstall --cask andrewmacheret/tap/i5-express
+          test ! -e "/Applications/I-5 Express.app"
