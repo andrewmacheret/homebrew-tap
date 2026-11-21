@@ -28,13 +28,13 @@ class AsciiCow < Formula
     resource("im2a").stage do
       system "autoreconf", "--force", "--install", "--verbose"
       # im2a's configure only looks for Magick++-config in /usr and /opt/imagemagick
-      system "./configure", "--with-magick++-config=#{Formula["imagemagick"].opt_bin}/Magick++-config",
+      system "./configure", "--with-magick++-config=#{formula_opt_bin("imagemagick")}/Magick++-config",
                             *std_configure_args(prefix: libexec)
       system "make", "install"
     end
 
     libexec.install "ascii-cow.sh" => "ascii-cow"
-    path = [libexec/"bin", Formula["imagemagick"].opt_bin, Formula["cowsay"].opt_bin].join(":")
+    path = [libexec/"bin", formula_opt_bin("imagemagick"), formula_opt_bin("cowsay")].join(":")
     (bin/"ascii-cow").write_env_script libexec/"ascii-cow", PATH: "#{path}:$PATH"
     pkgshare.install "example.jpg"
   end
