@@ -1,5 +1,5 @@
-# Points each cask at its app's latest release. Installed copies update themselves,
-# so this only matters for new installs.
+# Points each cask at its app's latest release, and each formula at its latest tag.
+# Installed casks update themselves, and `brew upgrade` picks up new formula versions.
 name: Update casks
 
 on:
@@ -36,4 +36,32 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git commit -am "i5-express $version"
+          git push
+
+  ascii-cow:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Update to the latest tag
+        env:
+          REPO: andrewmacheret/ascii-cow
+          FORMULA: Formula/ascii-cow.rb
+        run: |
+          tag=$(git ls-remote --tags --refs --sort=-version:refname "https://github.com/$REPO" 'v*' | head -n 1 | sed 's|.*refs/tags/||')
+          version=${tag#v}
+          current=$(sed -nE 's|^  url ".*/v(.*)\.tar\.gz"$|\1|p' "$FORMULA")
+          if [ -z "$tag" ] || [ "$version" = "$current" ]; then
+            echo "Already on $current"
+            exit 0
+          fi
+          url="https://github.com/$REPO/archive/refs/tags/$tag.tar.gz"
+          sha=$(curl -fsSL "$url" | sha256sum | cut -d' ' -f1)
+          # Two spaces of indent, so the im2a resource's url and sha256 are left alone
+          sed -i -E "s|^  url \".*\"$|  url \"$url\"|; s/^  sha256 \".*\"$/  sha256 \"$sha\"/" "$FORMULA"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -am "ascii-cow $version"
+          # The i5-express job may have pushed first
+          git pull --rebase
           git push

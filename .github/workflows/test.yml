@@ -1,4 +1,4 @@
-# Installs each cask on a clean Mac, checks it, then uninstalls it.
+# Installs each cask and formula on a clean Mac, checks it, then uninstalls it.
 name: Test
 
 on:
@@ -39,3 +39,31 @@ jobs:
         run: |
           brew uninstall --cask andrewmacheret/tap/i5-express
           test ! -e "/Applications/I-5 Express.app"
+
+  ascii-cow:
+    runs-on: macos-latest
+    env:
+      HOMEBREW_GITHUB_API_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Tap this checkout
+        run: |
+          brew tap andrewmacheret/tap "$GITHUB_WORKSPACE"
+          brew trust --formula andrewmacheret/tap/ascii-cow
+
+      - name: Audit
+        run: brew audit --formula --online andrewmacheret/tap/ascii-cow
+
+      - name: Install
+        run: |
+          brew install andrewmacheret/tap/ascii-cow
+          ascii-cow -f "$(brew --prefix)/share/ascii-cow/example.jpg" -w 60
+
+      - name: Test
+        run: brew test andrewmacheret/tap/ascii-cow
+
+      - name: Uninstall
+        run: |
+          brew uninstall andrewmacheret/tap/ascii-cow
+          ! command -v ascii-cow
