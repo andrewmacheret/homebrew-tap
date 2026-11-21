@@ -1,8 +1,8 @@
 class AsciiCow < Formula
   desc "Turn an image into colorful ASCII art spoken by a cow"
   homepage "https://github.com/andrewmacheret/ascii-cow"
-  url "https://github.com/andrewmacheret/ascii-cow/archive/refs/tags/v1.0.0.tar.gz"
-  sha256 "e4e96d251834d593d4ef6ba0a9ef12e055bbf33f021eff15d5edba413e46bc34"
+  url "https://github.com/andrewmacheret/ascii-cow/archive/refs/tags/v1.0.1.tar.gz"
+  sha256 "6e96c039f1994270f1325f379dbf4cf00a248c83d50626c0c89fbcd58bb3ca8d"
   license all_of: ["MIT", "Beerware"]
   head "https://github.com/andrewmacheret/ascii-cow.git", branch: "master"
 
