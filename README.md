@@ -1,6 +1,6 @@
 # Homebrew tap
 
-[![Test](https://github.com/andrewmacheret/homebrew-tap/actions/workflows/test.yml/badge.svg)](https://github.com/andrewmacheret/homebrew-tap/actions/workflows/test.yml) [![Update casks](https://github.com/andrewmacheret/homebrew-tap/actions/workflows/update.yml/badge.svg)](https://github.com/andrewmacheret/homebrew-tap/actions/workflows/update.yml)
+[![Test](https://github.com/andrewmacheret/homebrew-tap/actions/workflows/test.yml/badge.svg)](https://github.com/andrewmacheret/homebrew-tap/actions/workflows/test.yml) [![Update casks](https://github.com/andrewmacheret/homebrew-tap/actions/workflows/update.yml/badge.svg)](https://github.com/andrewmacheret/homebrew-tap/actions/workflows/update.yml) [![License](https://img.shields.io/badge/license-MIT-lightgray.svg)](https://github.com/andrewmacheret/homebrew-tap/blob/main/LICENSE.md)
 
 Homebrew casks and formulae for [andrewmacheret](https://github.com/andrewmacheret)'s apps.
 
