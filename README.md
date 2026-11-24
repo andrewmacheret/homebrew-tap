@@ -1,5 +1,7 @@
 # Homebrew tap
 
+[![Test](https://github.com/andrewmacheret/homebrew-tap/actions/workflows/test.yml/badge.svg)](https://github.com/andrewmacheret/homebrew-tap/actions/workflows/test.yml) [![Update casks](https://github.com/andrewmacheret/homebrew-tap/actions/workflows/update.yml/badge.svg)](https://github.com/andrewmacheret/homebrew-tap/actions/workflows/update.yml)
+
 Homebrew casks and formulae for [andrewmacheret](https://github.com/andrewmacheret)'s apps.
 
 | Name | What it is |
