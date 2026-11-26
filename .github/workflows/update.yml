@@ -1,10 +1,10 @@
 # Points each cask at its app's latest release, and each formula at its latest tag.
 # Installed casks update themselves, and `brew upgrade` picks up new formula versions.
+# canary's daily.yml starts this once a day. It's not a GitHub schedule, since GitHub
+# turns those off after 60 days without a commit.
 name: Update casks
 
 on:
-  schedule:
-    - cron: "17 */6 * * *"
   workflow_dispatch:
 
 permissions:

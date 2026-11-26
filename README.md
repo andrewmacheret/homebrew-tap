@@ -34,9 +34,7 @@ The app isn't signed with an Apple developer certificate, and since September 20
 
 ## How the tap stays current
 
-- **Update casks** runs every 6 hours. It points each cask at its app's latest release, and each formula at its repo's newest `v*` tag.
+- **Update casks** runs once a day, started by [canary](https://github.com/andrewmacheret/canary)'s daily run at 15:00 UTC. It points each cask at its app's latest release, and each formula at its repo's newest `v*` tag.
 - **Test** installs each cask and formula on a clean GitHub Mac runner, checks it, then uninstalls it.
 
-To release a new ascii-cow, push a tag like `v1.0.1` to its repo. The next **Update casks** run picks it up.
-
-GitHub pauses scheduled workflows after 60 days without a commit. If that happens, run **Update casks** from the Actions tab. Until then, new installs get the old version. I-5 Express then updates itself, but ascii-cow stays on the old version until the formula is updated.
+To release a new ascii-cow, push a tag like `v1.0.1` to its repo. The next **Update casks** run picks it up. To pick it up sooner, run **Update casks** from the Actions tab.
